@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Infrastructure.Scenes;
 using UnityEngine;
 
 namespace Infrastructure.StateMachine
@@ -9,11 +10,11 @@ namespace Infrastructure.StateMachine
         private readonly Dictionary<Type, IState> _states;
         private IState _currentState;
 
-        public GameStateMachine()
+        public GameStateMachine(SceneLoader sceneLoader)
         {
             _states = new Dictionary<Type, IState>()
             {
-                [typeof(BootstrapState)] = new BootstrapState(),
+                [typeof(BootstrapState)] = new BootstrapState(sceneLoader),
             };
         }
 

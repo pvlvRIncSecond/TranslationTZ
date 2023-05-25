@@ -1,4 +1,5 @@
-﻿using Infrastructure.StateMachine;
+﻿using Infrastructure.Scenes;
+using Infrastructure.StateMachine;
 
 namespace Infrastructure
 {
@@ -6,9 +7,9 @@ namespace Infrastructure
     {
         public readonly GameStateMachine GameStateMachine;
 
-        public Game()
+        public Game(ICoroutineRunner coroutineRunner)
         {
-            GameStateMachine = new GameStateMachine();
+            GameStateMachine = new GameStateMachine(new SceneLoader(coroutineRunner));
         }
     }
 }
