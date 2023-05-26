@@ -1,8 +1,17 @@
 ﻿namespace Infrastructure.StateMachine
 {
-    public interface IState
+    public interface IExitableState
+    {
+        void Exit();
+    }
+
+    public interface IState : IExitableState
     {
         void Enter();
-        void Exit();
+    }
+
+    public interface IPayloadedState<in TPayload> : IExitableState
+    {
+        void Enter(TPayload payload);
     }
 }
