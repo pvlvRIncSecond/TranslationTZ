@@ -1,4 +1,6 @@
 ﻿using Infrastructure.Scenes;
+using Infrastructure.Services;
+using Infrastructure.Services.Factory;
 using UnityEngine;
 
 namespace Infrastructure.StateMachine
@@ -16,6 +18,8 @@ namespace Infrastructure.StateMachine
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
+            
+            RegisterServices();
         }
 
         public void Enter() =>
@@ -25,14 +29,15 @@ namespace Infrastructure.StateMachine
         {
         }
 
-        private void OnLoad()
-        {
-            RegisterServices();
+        private void OnLoad() => 
             _gameStateMachine.Enter<LoadLevelState,string>(Main);
-        }
 
 
-        private void RegisterServices() =>
+        private void RegisterServices()
+        {
+            ServiceLocator.Container.RegisterSingle<IuiFactory>( new UIFactory());
+            
             Debug.Log("Services registered");
+        }
     }
 }

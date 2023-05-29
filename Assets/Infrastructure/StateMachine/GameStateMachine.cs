@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Infrastructure.Scenes;
+using Infrastructure.Services;
+using Infrastructure.Services.Factory;
 using UnityEngine;
 
 namespace Infrastructure.StateMachine
@@ -15,7 +17,7 @@ namespace Infrastructure.StateMachine
             _states = new Dictionary<Type, IExitableState>()
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader),
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, ServiceLocator.Container.Single<IuiFactory>()),
                 [typeof(GameLoopState)] = new GameLoopState(this),
             };
         }
