@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Scenes;
 using Infrastructure.Services;
+using Infrastructure.Services.Assets;
 using Infrastructure.Services.Factory;
 using UnityEngine;
 
@@ -37,7 +38,8 @@ namespace Infrastructure.StateMachine
 
         private void RegisterServices()
         {
-            _serviceLocator.RegisterSingle<IuiFactory>( new UIFactory());
+            _serviceLocator.RegisterSingle<IAssetLoader>(new AssetLoader());
+            _serviceLocator.RegisterSingle<IuiFactory>( new UIFactory(_serviceLocator.Single<IAssetLoader>()));
             
             Debug.Log("Services registered");
         }

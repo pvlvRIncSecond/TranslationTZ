@@ -1,18 +1,21 @@
-﻿using UnityEngine;
+﻿using Infrastructure.Services.Assets;
+using UnityEngine;
 
 namespace Infrastructure.Services.Factory
 {
-    internal class UIFactory : IuiFactory
+    public class UIFactory : IuiFactory
     {
-        private const string UIRoot = "UIRoot";
-        private const string ConnectionIndicator = "ConnectionIndicator";
+        private readonly IAssetLoader _assetLoader;
 
         private Transform _uiRoot;
-        
-        public void CreateUIRoot() => 
-            _uiRoot =Object.Instantiate(Resources.Load<GameObject>(UIRoot)).transform;
 
-        public void CreateConnectionIndicator() => 
-            Object.Instantiate(Resources.Load<GameObject>(ConnectionIndicator),_uiRoot);
+        public UIFactory(IAssetLoader assetLoader) =>
+            _assetLoader = assetLoader;
+
+        public void CreateUIRoot() =>
+            _uiRoot = _assetLoader.Instantiate(AssetPaths.UIRoot).transform;
+
+        public void CreateConnectionIndicator() =>
+            _assetLoader.Instantiate(AssetPaths.ConnectionIndicator, _uiRoot);
     }
 }
