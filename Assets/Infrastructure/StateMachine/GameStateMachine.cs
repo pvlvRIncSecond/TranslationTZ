@@ -10,14 +10,18 @@ namespace Infrastructure.StateMachine
     public class GameStateMachine
     {
         private readonly Dictionary<Type, IExitableState> _states;
+        private readonly ServiceLocator _serviceLocator;
+        
         private IState _currentState;
 
-        public GameStateMachine(SceneLoader sceneLoader)
+        public GameStateMachine(SceneLoader sceneLoader, ServiceLocator serviceLocator)
         {
+            _serviceLocator = serviceLocator;
+            
             _states = new Dictionary<Type, IExitableState>()
             {
-                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, ServiceLocator.Container.Single<IuiFactory>()),
+                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, _serviceLocator),
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, _serviceLocator.Single<IuiFactory>()),
                 [typeof(GameLoopState)] = new GameLoopState(this),
             };
         }

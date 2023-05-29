@@ -1,4 +1,5 @@
 using Infrastructure.Scenes;
+using Infrastructure.Services;
 using Infrastructure.StateMachine;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ namespace Infrastructure
 
         private void Awake()
         {
-            _game = new Game(this);
+            _game = new Game(this, ServiceLocator.Container);
             _game.GameStateMachine.Enter<BootstrapState>();
             
             DontDestroyOnLoad(this);

@@ -11,14 +11,16 @@ namespace Infrastructure.StateMachine
         private const string Initial = "Initial";
         
         private readonly GameStateMachine _gameStateMachine;
+        private readonly ServiceLocator _serviceLocator;
         private SceneLoader _sceneLoader;
 
 
-        public BootstrapState(GameStateMachine gameStateMachine ,SceneLoader sceneLoader)
+        public BootstrapState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, ServiceLocator serviceLocator)
         {
             _gameStateMachine = gameStateMachine;
+            _serviceLocator = serviceLocator;
             _sceneLoader = sceneLoader;
-            
+
             RegisterServices();
         }
 
@@ -35,7 +37,7 @@ namespace Infrastructure.StateMachine
 
         private void RegisterServices()
         {
-            ServiceLocator.Container.RegisterSingle<IuiFactory>( new UIFactory());
+            _serviceLocator.RegisterSingle<IuiFactory>( new UIFactory());
             
             Debug.Log("Services registered");
         }
