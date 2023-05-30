@@ -2,6 +2,7 @@
 using Infrastructure.Services;
 using Infrastructure.Services.Assets;
 using Infrastructure.Services.Factory;
+using Infrastructure.Services.Progress;
 using Infrastructure.Services.Sockets;
 using UnityEngine;
 
@@ -41,9 +42,10 @@ namespace Infrastructure.StateMachine
 
         private void RegisterServices()
         {
-            _serviceLocator.RegisterSingle<IEndpoint>(new Endpoint(_coroutineRunner));
+            _serviceLocator.RegisterSingle<IPersistentProgress>(new PersistentProgress());
+            _serviceLocator.RegisterSingle<IEndpoint>(new Endpoint(_coroutineRunner, _serviceLocator.Single<IPersistentProgress>()));
             _serviceLocator.RegisterSingle<IAssetLoader>(new AssetLoader());
-            _serviceLocator.RegisterSingle<IuiFactory>( new UIFactory(_serviceLocator.Single<IAssetLoader>()));
+            _serviceLocator.RegisterSingle<IuiFactory>( new UIFactory(_serviceLocator.Single<IAssetLoader>(),_serviceLocator.Single<IPersistentProgress>()));
             
             Debug.Log("Services registered");
         }

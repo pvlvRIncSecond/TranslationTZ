@@ -2,6 +2,6 @@
 {
     public interface IEndpoint : IService
     {
-        void Try();
+        void Connect();
     }
 }

@@ -12,5 +12,6 @@
     {
         void CreateUIRoot();
         void CreateConnectionIndicator();
+        void CreateOdometer();
     }
 }

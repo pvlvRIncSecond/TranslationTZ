@@ -4,5 +4,6 @@
     {
         public const string UIRoot = "UIRoot";
         public const string ConnectionIndicator = "ConnectionIndicator";
+        public const string Odometer = "Odometer";
     }
 }

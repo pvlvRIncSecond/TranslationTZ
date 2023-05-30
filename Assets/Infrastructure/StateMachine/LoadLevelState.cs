@@ -27,7 +27,7 @@ namespace Infrastructure.StateMachine
         {
             _uiFactory.CreateUIRoot();
             _uiFactory.CreateConnectionIndicator();
-            
+            _uiFactory.CreateOdometer();
             _gameStateMachine.Enter<GameLoopState>();
         }
     }

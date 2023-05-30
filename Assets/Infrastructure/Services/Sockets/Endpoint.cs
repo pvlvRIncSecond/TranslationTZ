@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Infrastructure.Scenes;
+using Infrastructure.Services.Progress;
 using UnityEngine;
 using WebSocketSharp;
 
@@ -13,38 +10,46 @@ namespace Infrastructure.Services.Sockets
     public class Endpoint : IEndpoint
     {
         private readonly ICoroutineRunner _coroutineRunner;
-        public const string UriPath = "ws://185.246.65.199:9090/ws";
+        private readonly IPersistentProgress _progress;
+        public const string Path = "ws://185.246.65.199:9090/ws";
 
-        public Endpoint(ICoroutineRunner coroutineRunner) => 
-            _coroutineRunner = coroutineRunner;
-
-        public void Try() =>
-            _coroutineRunner.StartCoroutine(Test());
-
-
-        private IEnumerator Test()
+        public Endpoint(ICoroutineRunner coroutineRunner, IPersistentProgress progress)
         {
-            using (var ws = new WebSocket(UriPath))
+            _coroutineRunner = coroutineRunner;
+            _progress = progress;
+        }
+
+        public void Connect() =>
+            _coroutineRunner.StartCoroutine(RunWs());
+
+
+        private IEnumerator RunWs()
+        {
+            using (var ws = new WebSocket(Path))
             {
                 ws.EmitOnPing = true;
                 ws.OnMessage += (sender, e) =>
                 {
-                    var body = !e.IsPing ? e.Data : "A ping was received.";
-                    Debug.Log("Operation says: " + body);
+                    if (!e.IsText) return;
+                    Debug.Log($"Operation says: {e.Data}");
+                    //if (e.IsText && e.Data.Contains("odometer"))
+                        _progress.Odometer = JsonUtility.FromJson<OdometerData>(e.Data).value;
                 };
 
                 ws.OnOpen += (sender, e) =>
                 {
-                    ws.Send("{operation : getCurrentOdometer}");
-                    //ws.Send("{operation: getRandomStatus}");
-                    Debug.Log("Connection established");
+                    _progress.ConnectedToServer = true;
+                    Debug.Log("Connection established.");
                 };
                 
                 ws.OnError+= (sender, e) =>
-                    Debug.Log("Connection error" + e.Exception + e.Message);
+                    Debug.Log($"Connection error. Exception:{e.Exception}, Message {e.Message}.");
                 
                 ws.OnClose += (sender, e) =>
-                    Debug.Log("Connection closed" + e.Reason + e.Code);
+                {
+                    _progress.ConnectedToServer = false;
+                    Debug.Log($"Connection closed. Reason {e.Reason}, Code: {e.Code}.");
+                };
                 
                 
                 ws.Connect();
@@ -56,7 +61,7 @@ namespace Infrastructure.Services.Sockets
         }
         
         [Serializable]
-        public class PingData
+        public class OdometerData
         {
             public string operation;
             public float value;
