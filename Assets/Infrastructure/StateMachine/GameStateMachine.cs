@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Infrastructure.Scenes;
 using Infrastructure.Services;
 using Infrastructure.Services.Factory;
+using Infrastructure.Services.Sockets;
 using UnityEngine;
 
 namespace Infrastructure.StateMachine
@@ -14,15 +15,15 @@ namespace Infrastructure.StateMachine
         
         private IState _currentState;
 
-        public GameStateMachine(SceneLoader sceneLoader, ServiceLocator serviceLocator)
+        public GameStateMachine(SceneLoader sceneLoader, ServiceLocator serviceLocator, ICoroutineRunner coroutineRunner)
         {
             _serviceLocator = serviceLocator;
             
             _states = new Dictionary<Type, IExitableState>()
             {
-                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, _serviceLocator),
+                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, _serviceLocator, coroutineRunner),
                 [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, _serviceLocator.Single<IuiFactory>()),
-                [typeof(GameLoopState)] = new GameLoopState(this),
+                [typeof(GameLoopState)] = new GameLoopState(this, _serviceLocator.Single<IEndpoint>()),
             };
         }
 

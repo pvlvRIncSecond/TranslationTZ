@@ -9,6 +9,6 @@ namespace Infrastructure
         public readonly GameStateMachine GameStateMachine;
 
         public Game(ICoroutineRunner coroutineRunner, ServiceLocator serviceLocator) => 
-            GameStateMachine = new GameStateMachine(new SceneLoader(coroutineRunner), serviceLocator);
+            GameStateMachine = new GameStateMachine(new SceneLoader(coroutineRunner), serviceLocator, coroutineRunner);
     }
 }

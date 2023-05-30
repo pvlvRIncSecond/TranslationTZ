@@ -2,6 +2,7 @@
 using Infrastructure.Services;
 using Infrastructure.Services.Assets;
 using Infrastructure.Services.Factory;
+using Infrastructure.Services.Sockets;
 using UnityEngine;
 
 namespace Infrastructure.StateMachine
@@ -13,13 +14,15 @@ namespace Infrastructure.StateMachine
         
         private readonly GameStateMachine _gameStateMachine;
         private readonly ServiceLocator _serviceLocator;
+        private readonly ICoroutineRunner _coroutineRunner;
         private SceneLoader _sceneLoader;
 
 
-        public BootstrapState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, ServiceLocator serviceLocator)
+        public BootstrapState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, ServiceLocator serviceLocator, ICoroutineRunner coroutineRunner)
         {
             _gameStateMachine = gameStateMachine;
             _serviceLocator = serviceLocator;
+            _coroutineRunner = coroutineRunner;
             _sceneLoader = sceneLoader;
 
             RegisterServices();
@@ -38,6 +41,7 @@ namespace Infrastructure.StateMachine
 
         private void RegisterServices()
         {
+            _serviceLocator.RegisterSingle<IEndpoint>(new Endpoint(_coroutineRunner));
             _serviceLocator.RegisterSingle<IAssetLoader>(new AssetLoader());
             _serviceLocator.RegisterSingle<IuiFactory>( new UIFactory(_serviceLocator.Single<IAssetLoader>()));
             
