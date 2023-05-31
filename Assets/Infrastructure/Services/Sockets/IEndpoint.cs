@@ -3,5 +3,6 @@
     public interface IEndpoint : IService
     {
         void Connect();
+        void Disconnect();
     }
 }

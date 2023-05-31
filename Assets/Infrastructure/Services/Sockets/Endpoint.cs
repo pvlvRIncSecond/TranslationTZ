@@ -14,6 +14,8 @@ namespace Infrastructure.Services.Sockets
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IPersistentProgress _progress;
 
+        private bool _run = true;
+
         public Endpoint(ICoroutineRunner coroutineRunner, IPersistentProgress progress)
         {
             _coroutineRunner = coroutineRunner;
@@ -23,10 +25,12 @@ namespace Infrastructure.Services.Sockets
         public void Connect() =>
             _coroutineRunner.StartCoroutine(RunWs());
 
+        public void Disconnect() =>
+            _run = false;
 
         private IEnumerator RunWs()
         {
-            using (var ws = new WebSocket(Path))
+            using (WebSocket ws = new WebSocket(Path))
             {
                 ws.EmitOnPing = true;
                 ws.OnMessage += (sender, e) =>
@@ -35,7 +39,7 @@ namespace Infrastructure.Services.Sockets
                     if (!e.IsText) return;
                     Debug.Log($"Operation says: {e.Data}");
                     //if (e.IsText && e.Data.Contains("odometer"))
-                        _progress.Odometer = JsonUtility.FromJson<OdometerData>(e.Data).value;
+                        _progress.Odometer = JsonUtility.FromJson<OdometerData>(e.Data).odometer;
                 };
 
                 ws.OnOpen += (sender, e) =>
@@ -55,18 +59,25 @@ namespace Infrastructure.Services.Sockets
                 
                 
                 ws.Connect();
+
+                while (CanRun())
+                {
+                    ws.Send("{operation: getCurrentOdometer}");
+                    yield return new WaitForSeconds(15);
+                }
                 
-                while (!Input.GetKeyDown(KeyCode.C))
-                    yield return null;
-                
+                ws.Close();
             }
         }
-        
+
+        private bool CanRun() => 
+            !Input.GetKeyDown(KeyCode.C) && _run;
+
         [Serializable]
         public class OdometerData
         {
             public string operation;
-            public float value;
+            public float odometer;
         }
     }
 }

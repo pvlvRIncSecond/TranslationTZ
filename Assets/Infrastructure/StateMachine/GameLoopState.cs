@@ -16,8 +16,7 @@ namespace Infrastructure.StateMachine
         public void Enter() => 
             _endpoint.Connect();
 
-        public void Exit()
-        {
-        }
+        public void Exit() => 
+            _endpoint.Disconnect();
     }
 }

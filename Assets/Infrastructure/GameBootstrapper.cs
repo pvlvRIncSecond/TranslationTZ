@@ -1,5 +1,6 @@
 using Infrastructure.Scenes;
 using Infrastructure.Services;
+using Infrastructure.Services.Sockets;
 using Infrastructure.StateMachine;
 using UnityEngine;
 
@@ -16,5 +17,8 @@ namespace Infrastructure
             
             DontDestroyOnLoad(this);
         }
+        
+        private void OnDestroy() => 
+            ServiceLocator.Container.Single<IEndpoint>().Disconnect();
     }
 }
