@@ -9,9 +9,10 @@ namespace Infrastructure.Services.Sockets
 {
     public class Endpoint : IEndpoint
     {
+        private const string Path = "ws://185.246.65.199:9090/ws";
+        
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IPersistentProgress _progress;
-        public const string Path = "ws://185.246.65.199:9090/ws";
 
         public Endpoint(ICoroutineRunner coroutineRunner, IPersistentProgress progress)
         {
@@ -30,6 +31,7 @@ namespace Infrastructure.Services.Sockets
                 ws.EmitOnPing = true;
                 ws.OnMessage += (sender, e) =>
                 {
+                    if (e.IsPing) Debug.Log($"Ping received");
                     if (!e.IsText) return;
                     Debug.Log($"Operation says: {e.Data}");
                     //if (e.IsText && e.Data.Contains("odometer"))

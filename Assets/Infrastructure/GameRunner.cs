@@ -10,7 +10,7 @@ namespace Infrastructure
         {
             var bootstrapper = FindObjectOfType<GameBootstrapper>();
             if (bootstrapper == null)
-                Instantiate(_gameBootstrapper);
+                Instantiate(_gameBootstrapper); 
         }
     }
 }

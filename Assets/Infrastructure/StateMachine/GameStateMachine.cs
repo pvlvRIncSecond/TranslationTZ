@@ -22,7 +22,7 @@ namespace Infrastructure.StateMachine
             _states = new Dictionary<Type, IExitableState>()
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, _serviceLocator, coroutineRunner),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, _serviceLocator.Single<IuiFactory>()),
+                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, _serviceLocator.Single<IuiFactory>(), _serviceLocator.Single<IWindowFactory>()),
                 [typeof(GameLoopState)] = new GameLoopState(this, _serviceLocator.Single<IEndpoint>()),
             };
         }
