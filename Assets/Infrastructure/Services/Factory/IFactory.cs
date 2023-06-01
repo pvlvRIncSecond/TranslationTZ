@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Components;
 using Components.Audio;
 using Infrastructure.Services.Audio;
 
@@ -19,7 +18,7 @@ namespace Infrastructure.Services.Factory
 
     public interface IuiFactory : IFactory
     {
-        List<ISoundTrigger> SoundTriggers { get; }
+        List<IAudioTrigger> SoundTriggers { get; }
         void CreateUIRoot();
         void CreateConnectionIndicator();
         void CreateOdometer();

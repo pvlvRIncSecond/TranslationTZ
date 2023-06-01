@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Components
 {
-    public class MenuButton : MonoBehaviour, ISoundTrigger
+    public class MenuButton : MonoBehaviour, IAudioTrigger
     {
         [SerializeField] private Button _menuButton;
         [SerializeField] private SoundId _soundId;

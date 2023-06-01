@@ -15,7 +15,7 @@ namespace Components.Audio
         public void Mute() =>
             _audioSource.mute = true;
 
-        private void Unmute() =>
+        public void Unmute() =>
             _audioSource.mute = false;
     }
 }

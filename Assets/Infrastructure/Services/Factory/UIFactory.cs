@@ -10,7 +10,7 @@ namespace Infrastructure.Services.Factory
 {
     public class UIFactory : IuiFactory
     {
-        public List<ISoundTrigger> SoundTriggers { get; } = new List<ISoundTrigger>();
+        public List<IAudioTrigger> SoundTriggers { get; } = new List<IAudioTrigger>();
 
         private readonly IAssetLoader _assetLoader;
         private readonly IPersistentProgress _progress;
@@ -42,7 +42,7 @@ namespace Infrastructure.Services.Factory
         private GameObject InstantiateRegistered(string path, Transform parent)
         {
             GameObject gameObject = _assetLoader.Instantiate(path, parent);
-            foreach (ISoundTrigger soundTrigger in gameObject.GetComponentsInChildren<ISoundTrigger>())
+            foreach (IAudioTrigger soundTrigger in gameObject.GetComponentsInChildren<IAudioTrigger>())
             {
                 soundTrigger.ConstructAudioTrigger(_audioService);
                 SoundTriggers.Add(soundTrigger);

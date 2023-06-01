@@ -2011,6 +2011,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _closeButton: {fileID: 1967752070809405981}
+  _musicToggle: {fileID: 1967752071277079065}
+  _soundsToggle: {fileID: 1967752071429161244}
+  _musicSlider: {fileID: 1967752070011920384}
+  _soundsSlider: {fileID: 1967752070723102895}
 --- !u!1 &1967752070778586138
 GameObject:
   m_ObjectHideFlags: 0
@@ -3329,7 +3333,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1967752071429161247}
   - component: {fileID: 1967752071429161244}
-  - component: {fileID: 8113609609277598139}
+  - component: {fileID: 8701626764807183643}
   m_Layer: 5
   m_Name: Sounds_togle
   m_TagString: Untagged
@@ -3407,7 +3411,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_IsOn: 1
---- !u!114 &8113609609277598139
+--- !u!114 &8701626764807183643
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

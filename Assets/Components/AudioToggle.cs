@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Components
 {
-    public class AudioToggle : MonoBehaviour, ISoundTrigger
+    public class AudioToggle : MonoBehaviour, IAudioTrigger
     {
         [SerializeField] private Toggle _toggle;
         [SerializeField] private SoundId _soundId;
@@ -22,5 +22,6 @@ namespace Components
 
         private void PlayAudio(bool state) => 
             _audioService.PlaySound(_soundId);
+
     }
 }

@@ -7,5 +7,6 @@ namespace Infrastructure.Services.Progress
         float Odometer { get; set; }
         bool ConnectedToServer { get; set; }
         Action OnConnectedChanged { get; set; }
+        MusicSettings MusicSettings { get; set; }
     }
 }

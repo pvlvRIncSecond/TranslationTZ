@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Services.Audio;
 using Infrastructure.Services.Windows;
+using UnityEngine.Audio;
 
 namespace Infrastructure.Services.StaticData
 {
@@ -9,5 +10,6 @@ namespace Infrastructure.Services.StaticData
         WindowConfig ForWindow(WindowId id);
         MusicConfig ForMusic(MusicId id);
         SoundConfig ForSound(SoundId id);
+        AudioMixer AudioMixer { get; }
     }
 }

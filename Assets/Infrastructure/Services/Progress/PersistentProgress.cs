@@ -5,6 +5,7 @@ namespace Infrastructure.Services.Progress
     public class PersistentProgress : IPersistentProgress
     {
         public Action OnConnectedChanged { get; set; }
+        
         public float Odometer { get; set; }
         public bool ConnectedToServer
         {
@@ -16,9 +17,23 @@ namespace Infrastructure.Services.Progress
             }
         }
 
+        public MusicSettings MusicSettings
+        {
+            get => _musicSettings;
+            set
+            {
+                _musicSettings = value;
+            }
+        }
+
         private bool _connectedToServer;
 
-        public PersistentProgress() => 
+        private MusicSettings _musicSettings;
+        
+        public PersistentProgress()
+        {
             Odometer = 0;
+            _musicSettings = new MusicSettings();
+        }
     }
 }

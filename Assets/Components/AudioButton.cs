@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Components
 {
-    public class AudioButton : MonoBehaviour, ISoundTrigger
+    public class AudioButton : MonoBehaviour, IAudioTrigger
     {
         [SerializeField] private Button _closeButton;
         [SerializeField] private SoundId _soundId;

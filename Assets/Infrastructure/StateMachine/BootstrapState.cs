@@ -17,16 +17,16 @@ namespace Infrastructure.StateMachine
         private const string Initial = "Initial";
 
         private readonly GameStateMachine _gameStateMachine;
-        private readonly ServiceLocator _serviceLocator;
+        private readonly ServiceLocator _services;
         private readonly ICoroutineRunner _coroutineRunner;
         private SceneLoader _sceneLoader;
 
 
-        public BootstrapState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, ServiceLocator serviceLocator,
+        public BootstrapState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, ServiceLocator services,
             ICoroutineRunner coroutineRunner)
         {
             _gameStateMachine = gameStateMachine;
-            _serviceLocator = serviceLocator;
+            _services = services;
             _coroutineRunner = coroutineRunner;
             _sceneLoader = sceneLoader;
 
@@ -46,34 +46,35 @@ namespace Infrastructure.StateMachine
 
         private void RegisterServices()
         {
-            _serviceLocator.RegisterSingle<IStaticDataService>(new StaticDataService());
-            _serviceLocator.Single<IStaticDataService>().LoadStaticData();
+            _services.RegisterSingle<IStaticDataService>(new StaticDataService());
+            _services.Single<IStaticDataService>().LoadStaticData();
 
-            _serviceLocator.RegisterSingle<IAssetLoader>(new AssetLoader());
-            _serviceLocator.RegisterSingle<IPersistentProgress>(new PersistentProgress());
+            _services.RegisterSingle<IAssetLoader>(new AssetLoader());
+            _services.RegisterSingle<IPersistentProgress>(new PersistentProgress());
 
-            _serviceLocator.RegisterSingle<IGameFactory>(new GameFactory(_serviceLocator.Single<IAssetLoader>()));
-            _serviceLocator.RegisterSingle<IAudioService>(new AudioService(_serviceLocator.Single<IGameFactory>(),
-                _serviceLocator.Single<IStaticDataService>()));
+            _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssetLoader>()));
+            _services.RegisterSingle<IAudioService>(new AudioService(_services.Single<IGameFactory>(),
+                _services.Single<IStaticDataService>(), _services.Single<IPersistentProgress>()));
 
-            _serviceLocator.RegisterSingle<IEndpoint>(new Endpoint(
+            _services.RegisterSingle<IEndpoint>(new Endpoint(
                 _coroutineRunner,
-                _serviceLocator.Single<IPersistentProgress>()
+                _services.Single<IPersistentProgress>()
             ));
 
-            _serviceLocator.RegisterSingle<IWindowFactory>(new WindowFactory(
-                _serviceLocator.Single<IAssetLoader>(),
-                _serviceLocator.Single<IStaticDataService>(),
-                _serviceLocator.Single<IAudioService>()
+            _services.RegisterSingle<IWindowFactory>(new WindowFactory(
+                _services.Single<IAssetLoader>(),
+                _services.Single<IStaticDataService>(),
+                _services.Single<IAudioService>(),
+                _services.Single<IPersistentProgress>()
             ));
 
-            _serviceLocator.RegisterSingle<IWindowService>(new WindowService(_serviceLocator.Single<IWindowFactory>()));
+            _services.RegisterSingle<IWindowService>(new WindowService(_services.Single<IWindowFactory>()));
 
-            _serviceLocator.RegisterSingle<IuiFactory>(new UIFactory(
-                _serviceLocator.Single<IAssetLoader>(),
-                _serviceLocator.Single<IPersistentProgress>(),
-                _serviceLocator.Single<IWindowService>(),
-                _serviceLocator.Single<IAudioService>()
+            _services.RegisterSingle<IuiFactory>(new UIFactory(
+                _services.Single<IAssetLoader>(),
+                _services.Single<IPersistentProgress>(),
+                _services.Single<IWindowService>(),
+                _services.Single<IAudioService>()
             ));
 
             Debug.Log("Services registered");
