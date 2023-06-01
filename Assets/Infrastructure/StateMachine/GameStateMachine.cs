@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Infrastructure.Scenes;
 using Infrastructure.Services;
+using Infrastructure.Services.Audio;
 using Infrastructure.Services.Factory;
 using Infrastructure.Services.Sockets;
 using UnityEngine;
@@ -22,8 +23,14 @@ namespace Infrastructure.StateMachine
             _states = new Dictionary<Type, IExitableState>()
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, _serviceLocator, coroutineRunner),
-                [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, _serviceLocator.Single<IuiFactory>(), _serviceLocator.Single<IWindowFactory>()),
-                [typeof(GameLoopState)] = new GameLoopState(this, _serviceLocator.Single<IEndpoint>()),
+                [typeof(LoadLevelState)] = new LoadLevelState(
+                    this, 
+                    sceneLoader, 
+                    _serviceLocator.Single<IuiFactory>(), 
+                    _serviceLocator.Single<IWindowFactory>(),
+                    _serviceLocator.Single<IGameFactory>()
+                    ),
+                [typeof(GameLoopState)] = new GameLoopState(this, _serviceLocator.Single<IEndpoint>(), _serviceLocator.Single<IAudioService>()),
             };
         }
 

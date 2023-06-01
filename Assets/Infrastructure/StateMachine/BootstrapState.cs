@@ -1,6 +1,7 @@
 ﻿using Infrastructure.Scenes;
 using Infrastructure.Services;
 using Infrastructure.Services.Assets;
+using Infrastructure.Services.Audio;
 using Infrastructure.Services.Factory;
 using Infrastructure.Services.Progress;
 using Infrastructure.Services.Sockets;
@@ -47,9 +48,13 @@ namespace Infrastructure.StateMachine
         {
             _serviceLocator.RegisterSingle<IStaticDataService>(new StaticDataService());
             _serviceLocator.Single<IStaticDataService>().LoadStaticData();
-                
+
             _serviceLocator.RegisterSingle<IAssetLoader>(new AssetLoader());
             _serviceLocator.RegisterSingle<IPersistentProgress>(new PersistentProgress());
+
+            _serviceLocator.RegisterSingle<IGameFactory>(new GameFactory(_serviceLocator.Single<IAssetLoader>()));
+            _serviceLocator.RegisterSingle<IAudioService>(new AudioService(_serviceLocator.Single<IGameFactory>(),
+                _serviceLocator.Single<IStaticDataService>()));
 
             _serviceLocator.RegisterSingle<IEndpoint>(new Endpoint(
                 _coroutineRunner,
@@ -58,7 +63,8 @@ namespace Infrastructure.StateMachine
 
             _serviceLocator.RegisterSingle<IWindowFactory>(new WindowFactory(
                 _serviceLocator.Single<IAssetLoader>(),
-                _serviceLocator.Single<IStaticDataService>()
+                _serviceLocator.Single<IStaticDataService>(),
+                _serviceLocator.Single<IAudioService>()
             ));
 
             _serviceLocator.RegisterSingle<IWindowService>(new WindowService(_serviceLocator.Single<IWindowFactory>()));
@@ -66,7 +72,8 @@ namespace Infrastructure.StateMachine
             _serviceLocator.RegisterSingle<IuiFactory>(new UIFactory(
                 _serviceLocator.Single<IAssetLoader>(),
                 _serviceLocator.Single<IPersistentProgress>(),
-                _serviceLocator.Single<IWindowService>()
+                _serviceLocator.Single<IWindowService>(),
+                _serviceLocator.Single<IAudioService>()
             ));
 
             Debug.Log("Services registered");

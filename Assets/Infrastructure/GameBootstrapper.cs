@@ -18,7 +18,7 @@ namespace Infrastructure
             DontDestroyOnLoad(this);
         }
         
-        private void OnDestroy() => 
+        private void OnApplicationQuit() => 
             ServiceLocator.Container.Single<IEndpoint>().Disconnect();
     }
 }

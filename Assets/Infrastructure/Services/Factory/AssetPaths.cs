@@ -8,5 +8,7 @@
         public const string Odometer = "UI/Odometer";
         public const string Settings = "UI/SettingsWindow";
         public const string WindowRoot = "UI/WindowRoot";
+        public const string MusicSource = "Audio/Music";
+        public const string SoundsSource = "Audio/Sounds";
     }
 }
