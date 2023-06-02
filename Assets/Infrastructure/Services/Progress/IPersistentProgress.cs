@@ -8,6 +8,8 @@ namespace Infrastructure.Services.Progress
         bool ConnectedToServer { get; set; }
         Action OnConnectedChanged { get; set; }
         MusicSettings MusicSettings { get; set; }
+        Action OnServerChanged { get; set; }
+        Action OnStreamChanged { get; set; }
         string ServerAddress { get; set; }
         string ServerPort { get; set; }
         string StreamAddress { get; set; }

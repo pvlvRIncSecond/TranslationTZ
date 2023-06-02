@@ -4,5 +4,6 @@
     {
         void Connect();
         void Disconnect();
+        void Reconnect();
     }
 }

@@ -35,6 +35,10 @@ namespace Components
             _soundsToggle.onValueChanged.AddListener(ChangeSoundsMuted);
             _musicSlider.onValueChanged.AddListener(ChangeMusicVolume);
             _soundsSlider.onValueChanged.AddListener(ChangeSoundsVolume);
+            
+            _serverAddress.onEndEdit.AddListener(ChangeServerAddress);
+            _serverPort.onEndEdit.AddListener(ChangeServerPort);
+            _streamAddress.onEndEdit.AddListener(ChangeStreamAddress);
         }
 
         private void Unsubscribe()
@@ -43,7 +47,20 @@ namespace Components
             _soundsToggle.onValueChanged.RemoveListener(ChangeSoundsMuted);
             _musicSlider.onValueChanged.RemoveListener(ChangeMusicVolume);
             _soundsSlider.onValueChanged.RemoveListener(ChangeSoundsVolume);
+            
+            _serverAddress.onEndEdit.RemoveListener(ChangeServerAddress);
+            _serverPort.onEndEdit.RemoveListener(ChangeServerPort);
+            _streamAddress.onEndEdit.RemoveListener(ChangeStreamAddress);
         }
+
+        private void ChangeStreamAddress(string value) => 
+            _persistentProgress.StreamAddress = value;
+
+        private void ChangeServerPort(string value) => 
+            _persistentProgress.ServerPort = value;
+
+        private void ChangeServerAddress(string value) => 
+            _persistentProgress.ServerAddress = value;
 
         private void ChangeMusicVolume(float volume) => 
             _persistentProgress.MusicSettings.MusicVolume = volume;
