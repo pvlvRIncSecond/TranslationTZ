@@ -7,6 +7,8 @@ namespace Infrastructure.Services.Audio
     public class AudioService : IAudioService
     {
         private const int MuteDb = 50;
+        private const string CacheSoundsVolume = "SoundsVolume";
+        private const string CacheMusicVolume = "MusicVolume";
 
         private readonly IGameFactory _gameFactory;
         private readonly IStaticDataService _staticDataService;
@@ -37,10 +39,10 @@ namespace Infrastructure.Services.Audio
         }
 
         private void SoundsVolume(float volume) => 
-            _staticDataService.AudioMixer.SetFloat("SoundsVolume",MuteDb * (volume-1));
+            _staticDataService.AudioMixer.SetFloat(CacheSoundsVolume,MuteDb * (volume-1));
 
         private void MusicVolume(float volume) => 
-            _staticDataService.AudioMixer.SetFloat("MusicVolume",MuteDb * (volume-1));
+            _staticDataService.AudioMixer.SetFloat(CacheMusicVolume,MuteDb * (volume-1));
 
         private void MuteMusic(bool state)
         {

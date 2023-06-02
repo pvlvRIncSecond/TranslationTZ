@@ -9,8 +9,6 @@ namespace Infrastructure.Services.Sockets
 {
     public class Endpoint : IEndpoint
     {
-        private const string Path = "ws://185.246.65.199:9090/ws";
-        
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly IPersistentProgress _progress;
 
@@ -30,7 +28,7 @@ namespace Infrastructure.Services.Sockets
 
         private IEnumerator RunWs()
         {
-            _ws = new WebSocket(Path);
+            _ws = new WebSocket(_progress.Endpoint());
             _ws.EmitOnPing = true;
             _ws.OnMessage += (sender, e) =>
             {

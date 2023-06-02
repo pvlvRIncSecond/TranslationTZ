@@ -11,8 +11,12 @@ namespace Components
 
         [SerializeField] private Slider _musicSlider;
         [SerializeField] private Slider _soundsSlider;
+        
+        [SerializeField] private TMPro.TMP_InputField _serverAddress;
+        [SerializeField] private TMPro.TMP_InputField _serverPort;
+        [SerializeField] private TMPro.TMP_InputField _streamAddress;
 
-
+        
         private IPersistentProgress _persistentProgress;
 
         private void OnDestroy() => 
@@ -60,6 +64,10 @@ namespace Components
 
             _soundsSlider.value = _persistentProgress.MusicSettings.SoundsVolume;
             _musicSlider.value = _persistentProgress.MusicSettings.MusicVolume;
+
+            _serverAddress.text = _persistentProgress.ServerAddress;
+            _serverPort.text = _persistentProgress.ServerPort;
+            _streamAddress.text = _persistentProgress.StreamAddress;
         }
     }
 }

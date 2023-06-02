@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Infrastructure.Scenes;
 using Infrastructure.Services;
 using Infrastructure.Services.Audio;
+using Infrastructure.Services.Config;
 using Infrastructure.Services.Factory;
 using Infrastructure.Services.Sockets;
 using UnityEngine;
@@ -12,25 +13,25 @@ namespace Infrastructure.StateMachine
     public class GameStateMachine
     {
         private readonly Dictionary<Type, IExitableState> _states;
-        private readonly ServiceLocator _serviceLocator;
+        private readonly ServiceLocator _services;
         
         private IState _currentState;
 
-        public GameStateMachine(SceneLoader sceneLoader, ServiceLocator serviceLocator, ICoroutineRunner coroutineRunner)
+        public GameStateMachine(SceneLoader sceneLoader, ServiceLocator services, ICoroutineRunner coroutineRunner)
         {
-            _serviceLocator = serviceLocator;
+            _services = services;
             
             _states = new Dictionary<Type, IExitableState>()
             {
-                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, _serviceLocator, coroutineRunner),
+                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, _services, coroutineRunner),
                 [typeof(LoadLevelState)] = new LoadLevelState(
                     this, 
                     sceneLoader, 
-                    _serviceLocator.Single<IuiFactory>(), 
-                    _serviceLocator.Single<IWindowFactory>(),
-                    _serviceLocator.Single<IGameFactory>()
+                    _services.Single<IuiFactory>(), 
+                    _services.Single<IWindowFactory>(),
+                    _services.Single<IGameFactory>()
                     ),
-                [typeof(GameLoopState)] = new GameLoopState(this, _serviceLocator.Single<IEndpoint>(), _serviceLocator.Single<IAudioService>()),
+                [typeof(GameLoopState)] = new GameLoopState(this, _services.Single<IEndpoint>(), _services.Single<IAudioService>(), _services.Single<IConfigReader>()),
             };
         }
 

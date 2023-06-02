@@ -2,6 +2,7 @@
 using Infrastructure.Services;
 using Infrastructure.Services.Assets;
 using Infrastructure.Services.Audio;
+using Infrastructure.Services.Config;
 using Infrastructure.Services.Factory;
 using Infrastructure.Services.Progress;
 using Infrastructure.Services.Sockets;
@@ -51,6 +52,7 @@ namespace Infrastructure.StateMachine
 
             _services.RegisterSingle<IAssetLoader>(new AssetLoader());
             _services.RegisterSingle<IPersistentProgress>(new PersistentProgress());
+            _services.RegisterSingle<IConfigReader>(new ConfigReader(_services.Single<IPersistentProgress>()));
 
             _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssetLoader>()));
             _services.RegisterSingle<IAudioService>(new AudioService(_services.Single<IGameFactory>(),

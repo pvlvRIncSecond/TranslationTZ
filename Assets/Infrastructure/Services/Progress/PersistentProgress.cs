@@ -17,23 +17,22 @@ namespace Infrastructure.Services.Progress
             }
         }
 
-        public MusicSettings MusicSettings
-        {
-            get => _musicSettings;
-            set
-            {
-                _musicSettings = value;
-            }
-        }
+        public MusicSettings MusicSettings { get; set; }
+
+        public string ServerAddress { get; set; }
+        public string ServerPort { get; set; }
+
+        public string StreamAddress { get; set; }
 
         private bool _connectedToServer;
 
-        private MusicSettings _musicSettings;
-        
         public PersistentProgress()
         {
             Odometer = 0;
-            _musicSettings = new MusicSettings();
+            MusicSettings = new MusicSettings();
         }
+        
+        public string Endpoint() => 
+            $"ws://{ServerAddress}:{ServerPort}/ws";
     }
 }

@@ -723,7 +723,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -2015,6 +2015,9 @@ MonoBehaviour:
   _soundsToggle: {fileID: 1967752071429161244}
   _musicSlider: {fileID: 1967752070011920384}
   _soundsSlider: {fileID: 1967752070723102895}
+  _serverAddress: {fileID: 1967752070064483902}
+  _serverPort: {fileID: 1967752072048450131}
+  _streamAddress: {fileID: 1967752070667298595}
 --- !u!1 &1967752070778586138
 GameObject:
   m_ObjectHideFlags: 0
@@ -4091,7 +4094,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -4378,7 +4381,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
