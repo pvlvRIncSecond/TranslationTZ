@@ -6,9 +6,10 @@
         public const string UIRoot = "UI/UIRoot";
         public const string ConnectionIndicator = "UI/ConnectionIndicator";
         public const string Odometer = "UI/Odometer";
-        public const string Settings = "UI/SettingsWindow";
         public const string WindowRoot = "UI/WindowRoot";
         public const string MusicSource = "Audio/Music";
         public const string SoundsSource = "Audio/Sounds";
+        public const string StreamButton = "UI/StreamButton";
+        public const string VideoPanel = "UI/VideoPanel";
     }
 }

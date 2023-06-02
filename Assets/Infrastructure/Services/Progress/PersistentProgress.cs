@@ -58,6 +58,7 @@ namespace Infrastructure.Services.Progress
         {
             Odometer = 0;
             MusicSettings = new MusicSettings();
+            StreamAddress = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
         }
         
         public string Endpoint() => 

@@ -39,6 +39,9 @@ namespace Infrastructure.Services.Factory
         public void CreateMenuButton() =>
             InstantiateRegistered(AssetPaths.MenuButton, _uiRoot).GetComponentInChildren<MenuButton>().Construct(_windowService);
 
+        public void CreateStreamButton(PlayVideo videoPanel) => 
+            _assetLoader.Instantiate(AssetPaths.StreamButton, _uiRoot).GetComponentInChildren<StreamButton>().Construct(videoPanel);
+
         private GameObject InstantiateRegistered(string path, Transform parent)
         {
             GameObject gameObject = _assetLoader.Instantiate(path, parent);

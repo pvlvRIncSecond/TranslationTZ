@@ -54,7 +54,7 @@ namespace Infrastructure.StateMachine
             _services.RegisterSingle<IPersistentProgress>(new PersistentProgress());
             _services.RegisterSingle<IConfigReader>(new ConfigReader(_services.Single<IPersistentProgress>()));
 
-            _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssetLoader>()));
+            _services.RegisterSingle<IGameFactory>(new GameFactory(_services.Single<IAssetLoader>(), _services.Single<IPersistentProgress>()));
             _services.RegisterSingle<IAudioService>(new AudioService(_services.Single<IGameFactory>(),
                 _services.Single<IStaticDataService>(), _services.Single<IPersistentProgress>()));
 

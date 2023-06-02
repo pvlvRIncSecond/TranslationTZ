@@ -4,5 +4,6 @@
     {
         void PlayMusic(MusicId id);
         void PlaySound(SoundId id);
+        void MuteMusic(bool state);
     }
 }

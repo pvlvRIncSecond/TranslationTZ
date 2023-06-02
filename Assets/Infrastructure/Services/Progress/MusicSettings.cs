@@ -24,6 +24,14 @@ namespace Infrastructure.Services.Progress
                 OnMusicSettingsChanged?.Invoke();
             }
         }
+        public bool StreamEnabled {
+            get => _streamEnabled;
+            set
+            {
+                _streamEnabled = value;
+                OnMusicSettingsChanged?.Invoke();
+            }
+        }
         
         public float MusicVolume {
             get => _musicVolume;
@@ -45,6 +53,7 @@ namespace Infrastructure.Services.Progress
 
         private bool _musicMuted;
         private bool _soundsMuted;
+        private bool _streamEnabled;
         private float _musicVolume;
         private float _soundsVolume;
 
@@ -52,6 +61,8 @@ namespace Infrastructure.Services.Progress
         {
             _musicMuted = true;
             _soundsMuted = true;
+            _streamEnabled = false;
+            
             _musicVolume = 1f;
             _soundsVolume = 1f;
         }

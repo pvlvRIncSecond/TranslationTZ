@@ -32,7 +32,7 @@ namespace Infrastructure.Services.Audio
 
         private void OnValuesChanged()
         {
-            MuteMusic(_progress.MusicSettings.MusicMuted);
+            MuteMusic(_progress.MusicSettings.MusicMuted && !_progress.MusicSettings.StreamEnabled);
             MuteSounds(_progress.MusicSettings.SoundsMuted);
             SoundsVolume(_progress.MusicSettings.SoundsVolume);
             MusicVolume(_progress.MusicSettings.MusicVolume);
@@ -44,7 +44,7 @@ namespace Infrastructure.Services.Audio
         private void MusicVolume(float volume) => 
             _staticDataService.AudioMixer.SetFloat(CacheMusicVolume,MuteDb * (volume-1));
 
-        private void MuteMusic(bool state)
+        public void MuteMusic(bool state)
         {
             if (!state) 
                 _gameFactory.Music.Mute();

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Components;
 using Components.Audio;
 using Infrastructure.Services.Audio;
 
@@ -14,6 +15,8 @@ namespace Infrastructure.Services.Factory
         void CreateSoundsSource();
         MusicSource Music { get; }
         SoundsSource Sounds { get; }
+        PlayVideo VideoPanel { get; }
+        void CreateVideoPanel();
     }
 
     public interface IuiFactory : IFactory
@@ -23,5 +26,6 @@ namespace Infrastructure.Services.Factory
         void CreateConnectionIndicator();
         void CreateOdometer();
         void CreateMenuButton();
+        void CreateStreamButton(PlayVideo videoPanel);
     }
 }

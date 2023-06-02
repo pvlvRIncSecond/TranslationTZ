@@ -36,6 +36,9 @@ namespace Infrastructure.StateMachine
 
             _gameFactory.CreateMusicSource();
             _gameFactory.CreateSoundsSource();
+            _gameFactory.CreateVideoPanel();
+            
+            _uiFactory.CreateStreamButton(_gameFactory.VideoPanel);
             
             _windowFactory.CreateUIRoot();
             _gameStateMachine.Enter<GameLoopState>();
